@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // const socket = io('http://localhost:8080')
@@ -38,7 +37,7 @@ function App() {
      console.log('REMOVE ELEMENTO', userName)
      socket.emit('removeUser', userName)
     }
-  }, []);
+  }, [userName]);
 
   const handleOpenDialog = () => {
     setOpen(true);
