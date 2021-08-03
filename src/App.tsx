@@ -9,8 +9,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const socket = io('http://localhost:8080')
-// const socket = io("https://watch-sync-server.herokuapp.com/");
+// const socket = io('http://localhost:8080')
+const socket = io("https://watch-sync-server.herokuapp.com/");
 
 socket.on("connect", () => {
   console.log("Socket Conectado com sucesso");
