@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import io from "socket.io-client";
 import ReactPlayer from "react-player";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -8,15 +7,10 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-// const socket = io('http://localhost:8080')
-const socket = io("https://watch-sync-server.herokuapp.com/");
-
-socket.on("connect", () => {
-  console.log("Socket Conectado com sucesso");
-});
+import { useSocket } from "./contexts/socket";
 
 function App() {
+  const socket = useSocket();
   // controle do modal de nome de usuario
   const [open, setOpen] = React.useState(false);
   const [userName, setUserName] = useState<string>();
@@ -30,63 +24,55 @@ function App() {
   let timeVideoAux: number = 0;
 
   useEffect(() => {
-    // init do component
+    socket.on("disconnect", (userList: any[]) => {
+      setUserList(userList);
+    });
+
+    // Recebe lista de usuarios
+    socket.on("receiveUserList", (userList: any[]) => {
+      if (userList.length) {
+        setUserList(userList);
+      }
+    });
+
+    // Recebe mensagem para iniciar/pausar video
+    socket.on("receivePlayOrPause", (data: any) => {
+      if (data === "play") {
+        setPlayVideo(true);
+      } else {
+        setPlayVideo(false);
+      }
+    });
+
+    socket.on("receiveAddVideo", (videoList: any) => {
+      if (videoList) {
+        addVideo(videoList);
+      }
+    });
+
+    socket.on("receiveSyncVideo", (timeSeconds: number) => {
+      setSecondsVideo(timeSeconds);
+    });
+
+    socket.on("receiveEndVideo", (videoList: any) => {
+      endVideo(videoList);
+    });
     socket.emit("getUserList");
     socket.emit("getVideoList");
     handleOpenDialog();
-  }, [userName]);
-
-  useEffect(() => {
-    return () => {
-      console.log("DESTROY");
-    };
-  }, []);
+  }, [socket]);
 
   const handleOpenDialog = () => {
     setOpen(true);
   };
 
   const handleCloseDialog = () => {
-    if(!userName) {
-      setUserName('Daniel do Sync');
+    if (!userName) {
+      setUserName("Daniel do Sync");
     }
     socket.emit("addUser", userName);
     setOpen(false);
   };
-
-  socket.on("disconnect", (userList: any[]) => {
-    setUserList(userList);
-  });
-
-  // Recebe lista de usuarios
-  socket.on("receiveUserList", (userList: any[]) => {
-    if (userList.length) {
-      setUserList(userList);
-    }
-  });
-
-  // Recebe mensagem para iniciar/pausar video
-  socket.on("receivePlayOrPause", (data: any) => {
-    if (data === "play") {
-      setPlayVideo(true);
-    } else {
-      setPlayVideo(false);
-    }
-  });
-
-  socket.on("receiveAddVideo", (videoList: any) => {
-    if (videoList) {
-      addVideo(videoList);
-    }
-  });
-
-  socket.on("receiveSyncVideo", (timeSeconds: number) => {
-    setSecondsVideo(timeSeconds);
-  });
-
-  socket.on("receiveEndVideo", (videoList: any) => {
-    endVideo(videoList);
-  });
 
   const handlePlayVideo = () => {
     socket.emit("playOrPause", "play");
@@ -144,7 +130,7 @@ function App() {
         <div className="userList">
           <h2>Lista de usuarios</h2>
           <ul>
-            {localUserList.map(({name}) => (
+            {localUserList.map(({ name }) => (
               <li>{name}</li>
             ))}
           </ul>
@@ -224,7 +210,11 @@ function App() {
           />
         </DialogContent>
         <DialogActions>
-          <Button disabled={!userName} onClick={handleCloseDialog} color="primary">
+          <Button
+            disabled={!userName}
+            onClick={handleCloseDialog}
+            color="primary"
+          >
             OK
           </Button>
         </DialogActions>
