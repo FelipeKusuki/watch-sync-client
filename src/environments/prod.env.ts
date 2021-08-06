@@ -1,5 +1,5 @@
 const env = {
-  url: "http://localhost:8080",
+  url: "https://watch-sync-server.herokuapp.com/",
 };
 
 export default env;
