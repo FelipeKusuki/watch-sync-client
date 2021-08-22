@@ -8,6 +8,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Header, UserList, VideoList } from "./components";
 
 // const socket = io('http://localhost:8080')
 const socket = io("https://watch-sync-server.herokuapp.com/");
@@ -38,7 +39,6 @@ function App() {
 
   useEffect(() => {
     return () => {
-      console.log("DESTROY");
     };
   }, []);
 
@@ -135,20 +135,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header">
-        <div className="logo">{/* logo */}</div>
-        <h2>Daniel Do Sync</h2>
-      </div>
+      <Header/>
 
       <div className="body">
-        <div className="userList">
-          <h2>Lista de usuarios</h2>
-          <ul>
-            {localUserList.map(({name}) => (
-              <li>{name}</li>
-            ))}
-          </ul>
-        </div>
+        <UserList userList={localUserList}/>
 
         <div className="youtubePlayer">
           <div className="player">
@@ -195,14 +185,7 @@ function App() {
           </div>
         </div>
 
-        <div className="videoList">
-          <h2>Lista de Videos</h2>
-          <ul>
-            {localVideoList.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
+        <VideoList videoList={localVideoList}/>
       </div>
 
       {/* DIALOG PARA NOME DE USUARIO */}

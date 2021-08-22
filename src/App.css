@@ -47,8 +47,6 @@
 .logo {
   width: 10%;
   height: 100%;
-  background-color: white;
-  border-radius: 50%;
   overflow: hidden;
   float: left;
   margin: 0 15px;
@@ -75,3 +73,40 @@
   margin: 8px;
 }
 
+
+/* UserList Estilos */
+.userList {
+  margin-right: 16px;
+}
+
+
+/* UserItem Estilos */
+
+.userItem {
+  display: flex;
+  height: 15%;
+  margin: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  align-items: center;
+  background-color: #d7d6d6;
+}
+
+.userAvatar {
+  margin: 0 8px;
+}
+
+/* VideoItem Estilos */
+
+.videoItem {
+  height: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 16px 0;
+}
+
+/* VideoItem Estilos */
+
+.videoItemButton {
+  display: flex;
+}
