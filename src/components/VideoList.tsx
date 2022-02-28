@@ -7,7 +7,7 @@ const VideoList = ({videoList}: any) => {
     return (
         <div className="videoList">
             <h2>
-                Proximos de Videos
+                Proximos Videos
             </h2>
             {videoList.map((item: any, index: number) => {
                 if(index !== 0) {

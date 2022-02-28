@@ -1,11 +1,8 @@
 import React from 'react'
 import './../App.css';
 
-// import Button from "@material-ui/core/Button";
-// import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-// import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@nextui-org/react';
-import { Home } from 'react-iconly'
+import { Button, Text } from '@nextui-org/react';
+import { Delete, Play } from 'react-iconly';
 
 
 
@@ -31,23 +28,28 @@ export default function VideoItem({videoItem, index}: any) {
     const videoImageUrl = "https://img.youtube.com/vi/" + videoId + "/default.jpg"
 
     return (
-        <div className="videoItem" style={{ 
-            backgroundImage: `url(${videoImageUrl})` 
-          }}>
-            <div className="videoItemButton">
-                <Button
-                    color="secondary"
-                    size="sm"
-                    icon={<Home/>}
-                    onClick={handleRemoveVideo}>
-                </Button>
-
-                <Button
-                    color="secondary"
-                    size="sm"
-                    icon={<Home/>}
-                    onClick={handlePlayVideo}>
-                </Button>
+        <div className="videoItem" onClick={handlePlayVideo}>
+            <div className="videoItemBackground" style={{ 
+                backgroundImage: `url(${videoImageUrl})` 
+            }}>
+                <div className="videoItemButton">
+                    <Button
+                        auto
+                        size="xs"
+                        color="error"
+                        icon={<Delete filled />}
+                        onClick={handleRemoveVideo}
+                    >
+                    </Button>
+                </div>
+            </div>
+            <div className="videoItemDescription">
+                <Text size="100%" color="success">
+                    Daniel do Titulo
+                </Text>
+                <Text size={12}>
+                    Daniel da Descrição
+                </Text>
             </div>
         </div>
     )

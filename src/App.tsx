@@ -136,6 +136,21 @@ function App() {
           <UserList userList={localUserList}/>
 
           <div className="youtubePlayer">
+            <div className="controls">
+
+              <Input
+                width="100%"
+                id="standard-basic"
+                placeholder="URL Video"
+                onChange={handleChangeUrl}
+                />
+              <Button
+                onClick={handleAddVideo}
+                color="primary"
+                >
+                Adicionar
+              </Button>
+            </div>
             <div className="player">
               <ReactPlayer
                 onProgress={handleProgressVideo}
@@ -148,20 +163,6 @@ function App() {
               />
             </div>
             <div className="controls">
-              <form onSubmit={handleAddVideo}>
-                <Input
-                  bordered
-                  id="standard-basic"
-                  placeholder="URL Video:"
-                  onChange={handleChangeUrl}
-                />
-                <Button
-                  onClick={handleAddVideo}
-                  color="primary"
-                >
-                  Adicionar
-                </Button>
-              </form>
               <Button
                 color="primary"
                 onClick={handleEndVideo}
@@ -182,11 +183,12 @@ function App() {
 
         {/* DIALOG PARA NOME DE USUARIO */}
         <Modal
+          preventClose
           open={open}
           onClose={handleCloseDialog}
           aria-labelledby="form-dialog-title"
         >
-        <form onSubmit={handleCloseDialog}>
+        {/* <form onSubmit={handleCloseDialog}> */}
           <Modal.Header id="form-dialog-title">Nome de Usuario</Modal.Header>
           <Modal.Body>
               <Input
@@ -197,9 +199,9 @@ function App() {
                 onChange={handleChangeUserName}
               />
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer justify='center'>
             <Button
-              type="submit"
+              id="submit"
               disabled={!userName}
               onClick={handleCloseDialog}
               color="primary"
@@ -207,7 +209,7 @@ function App() {
               OK
             </Button>
           </Modal.Footer>
-        </form>
+        {/* </form> */}
         </Modal>
         {/* FIM DIALOG PARA NOME DE USUARIO */}
       </div>

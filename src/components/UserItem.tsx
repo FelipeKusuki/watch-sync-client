@@ -1,3 +1,4 @@
+import { Avatar } from '@nextui-org/react';
 import React from 'react'
 import './../App.css';
 
@@ -8,9 +9,15 @@ import './../App.css';
 export default function UserItem({userItem}: any) {
     return (
         <div className="userItem">
-            
-            {/* <Avatar className="userAvatar" alt={userItem.name} src="../assets/danielSync.jpg"/> */}
-            {userItem.name}
+            <Avatar
+                className="userAvatar"
+                text={userItem.name}
+                size="lg"
+                bordered
+                squared/>
+            <div className='userItemName'>
+                {userItem.name}
+            </div>
         </div>
     )
 }

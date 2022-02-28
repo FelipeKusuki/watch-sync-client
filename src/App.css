@@ -67,10 +67,12 @@
   margin: 8px;
 }
 
+/* Pesquisa Estilos */
+
 .controls {
   display: flex;
-  justify-content: space-around;
-  margin: 8px;
+  justify-content: space-between;
+  margin: 16px;
 }
 
 
@@ -92,6 +94,10 @@
   background-color: #d7d6d6;
 }
 
+.userItemName {
+  margin-left: 8px;
+}
+
 .userAvatar {
   margin: 0 8px;
 }
@@ -99,10 +105,24 @@
 /* VideoItem Estilos */
 
 .videoItem {
-  height: 100px;
-  background-size: 100%;
+  display: flex;
+}
+
+.videoItem:hover {
+  cursor: pointer;
+}
+
+.videoItemBackground {
+  width: 120px;
+  height: 80px;
   background-repeat: no-repeat;
-  margin: 16px 0;
+  margin: 16px;
+}
+
+.videoItemDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* VideoItem Estilos */
