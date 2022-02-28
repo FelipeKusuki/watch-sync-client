@@ -1,9 +1,11 @@
 import React from 'react'
 import './../App.css';
 
-import Button from "@material-ui/core/Button";
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import Button from "@material-ui/core/Button";
+// import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+// import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@nextui-org/react';
+import { Home } from 'react-iconly'
 
 
 
@@ -34,18 +36,16 @@ export default function VideoItem({videoItem, index}: any) {
           }}>
             <div className="videoItemButton">
                 <Button
-                    variant="contained"
                     color="secondary"
-                    size="small"
-                    startIcon={<DeleteIcon />}
+                    size="sm"
+                    icon={<Home/>}
                     onClick={handleRemoveVideo}>
                 </Button>
 
                 <Button
-                    variant="contained"
                     color="secondary"
-                    size="small"
-                    startIcon={<PlayCircleOutlineIcon/>}
+                    size="sm"
+                    icon={<Home/>}
                     onClick={handlePlayVideo}>
                 </Button>
             </div>

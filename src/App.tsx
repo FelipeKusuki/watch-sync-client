@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import ReactPlayer from "react-player";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+// import Button from "@material-ui/core/Button";
+// import TextField from "@material-ui/core/TextField";
+// import Dialog from "@material-ui/core/Dialog";
+// import DialogActions from "@material-ui/core/DialogActions";
+// import DialogContent from "@material-ui/core/DialogContent";
+// import DialogTitle from "@material-ui/core/DialogTitle";
 import { Header, UserList, VideoList } from "./components";
 import { useSocket } from "./contexts/socket";
+import { NextUIProvider } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
+import { Modal } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
+
+
+
 
 function App() {
   const socket = useSocket();
@@ -121,90 +128,90 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header/>
+    <NextUIProvider>
+      <div className="App">
+        <Header/>
 
-      <div className="body">
-        <UserList userList={localUserList}/>
+        <div className="body">
+          <UserList userList={localUserList}/>
 
-        <div className="youtubePlayer">
-          <div className="player">
-            <ReactPlayer
-              onProgress={handleProgressVideo}
-              playing={playVideo}
-              controls={true}
-              url={localVideoList[0] + "?t=" + secondsVideo}
-              onPlay={handlePlayVideo}
-              onPause={handlePauseVideo}
-              onEnded={handleEndVideo}
-            />
-          </div>
-          <div className="controls">
-            <form onSubmit={handleAddVideo}>
-              <TextField
-                id="standard-basic"
-                label="URL Video:"
-                onChange={handleChangeUrl}
+          <div className="youtubePlayer">
+            <div className="player">
+              <ReactPlayer
+                onProgress={handleProgressVideo}
+                playing={playVideo}
+                controls={true}
+                url={localVideoList[0] + "?t=" + secondsVideo}
+                onPlay={handlePlayVideo}
+                onPause={handlePauseVideo}
+                onEnded={handleEndVideo}
               />
+            </div>
+            <div className="controls">
+              <form onSubmit={handleAddVideo}>
+                <Input
+                  bordered
+                  id="standard-basic"
+                  placeholder="URL Video:"
+                  onChange={handleChangeUrl}
+                />
+                <Button
+                  onClick={handleAddVideo}
+                  color="primary"
+                >
+                  Adicionar
+                </Button>
+              </form>
               <Button
-                variant="contained"
                 color="primary"
-                onClick={handleAddVideo}
-                style={{ height: "100%" }}
+                onClick={handleEndVideo}
               >
-                Adicionar
+                Proximo
               </Button>
-            </form>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleEndVideo}
-            >
-              Proximo
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSyncVideo}
-            >
-              Sincronizar
-            </Button>
+              <Button
+                color="primary"
+                onClick={handleSyncVideo}
+              >
+                Sincronizar
+              </Button>
+            </div>
           </div>
+
+          <VideoList videoList={localVideoList}/>
         </div>
 
-        <VideoList videoList={localVideoList}/>
+        {/* DIALOG PARA NOME DE USUARIO */}
+        <Modal
+          open={open}
+          onClose={handleCloseDialog}
+          aria-labelledby="form-dialog-title"
+        >
+        <form onSubmit={handleCloseDialog}>
+          <Modal.Header id="form-dialog-title">Nome de Usuario</Modal.Header>
+          <Modal.Body>
+              <Input
+                autoFocus
+                bordered
+                id="name"
+                placeholder="Nome de Usuario"
+                onChange={handleChangeUserName}
+              />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              type="submit"
+              disabled={!userName}
+              onClick={handleCloseDialog}
+              color="primary"
+              >
+              OK
+            </Button>
+          </Modal.Footer>
+        </form>
+        </Modal>
+        {/* FIM DIALOG PARA NOME DE USUARIO */}
       </div>
-
-      {/* DIALOG PARA NOME DE USUARIO */}
-      <Dialog
-        open={open}
-        onClose={handleCloseDialog}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Nome de Usuario</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Nome de Usuario"
-            type="text"
-            fullWidth
-            onChange={handleChangeUserName}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            disabled={!userName}
-            onClick={handleCloseDialog}
-            color="primary"
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* FIM DIALOG PARA NOME DE USUARIO */}
-    </div>
+    </NextUIProvider>
   );
 }
 
